@@ -1,3 +1,4 @@
+
 import { initializeApp } from 'firebase/app'
 import { getAuth } from 'firebase/auth'
 import { getFirestore } from 'firebase/firestore'
@@ -12,10 +13,17 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID,
 }
 
-const configured = Boolean(firebaseConfig.apiKey && firebaseConfig.projectId && firebaseConfig.appId)
-const app = configured ? initializeApp(firebaseConfig) : null
+export const firebaseConfigured = Boolean(
+  firebaseConfig.apiKey &&
+  firebaseConfig.authDomain &&
+  firebaseConfig.projectId &&
+  firebaseConfig.appId
+)
+
+const app = firebaseConfigured
+  ? initializeApp(firebaseConfig)
+  : null
 
 export const auth = app ? getAuth(app) : null
 export const db = app ? getFirestore(app) : null
 export const storage = app ? getStorage(app) : null
-export const firebaseConfigured = configured
